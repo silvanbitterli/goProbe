@@ -12,7 +12,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/els0r/goProbe/pkg/goDB/conditions/node"
 	"strings"
 
 	"github.com/els0r/goProbe/pkg/goDB/conditions"
@@ -61,7 +60,7 @@ func nextAll(prevprev, prev string, openParens int) []suggestion {
 			s(types.DportName, false),
 			s("port", false),
 			s(types.ProtoName, false),
-			s(node.FilterKeywordDirection, false)}
+			s(types.FilterKeywordDirection, false)}
 
 		/*
 			// suggest direction filter in case condition is still
@@ -107,7 +106,7 @@ func nextAll(prevprev, prev string, openParens int) []suggestion {
 			s("<=", false),
 			s(">=", false),
 		}
-	case node.FilterKeywordDirection:
+	case types.FilterKeywordDirection:
 		return []suggestion{
 			s("=", false),
 		}
@@ -119,12 +118,12 @@ func nextAll(prevprev, prev string, openParens int) []suggestion {
 				result = append(result, suggestion{name, name + " ...", openParens == 0})
 			}
 			return result
-		case node.FilterKeywordDirection:
+		case types.FilterKeywordDirection:
 			return []suggestion{
-				s(string(node.FilterTypeDirectionIn), openParens == 0),
-				s(string(node.FilterTypeDirectionOut), openParens == 0),
-				s(string(node.FilterTypeDirectionUni), openParens == 0),
-				s(string(node.FilterTypeDirectionBi), openParens == 0),
+				s(string(types.FilterTypeDirectionIn), openParens == 0),
+				s(string(types.FilterTypeDirectionOut), openParens == 0),
+				s(string(types.FilterTypeDirectionUni), openParens == 0),
+				s(string(types.FilterTypeDirectionBi), openParens == 0),
 			}
 		default:
 			return nil
@@ -190,7 +189,7 @@ func conditional(args []string) []string {
 		// has already occurred in the condition
 		dirKeywordOccurred := false
 		for _, token := range tokens {
-			if token == node.FilterKeywordDirection {
+			if token == types.FilterKeywordDirection {
 				dirKeywordOccurred = true
 			}
 		}
@@ -211,7 +210,7 @@ func conditional(args []string) []string {
 		prev := penultimate(tokens)
 		for _, sugg := range nextAll(prevprev, prev, openParens(tokens)) {
 			if strings.HasPrefix(sugg.token, last(tokens)) {
-				if strings.Contains(sugg.token, node.FilterKeywordDirection) {
+				if strings.Contains(sugg.token, types.FilterKeywordDirection) {
 					if !(prev == "" || (topLevelAnd && !dirKeywordOccurred)) {
 						continue
 					}

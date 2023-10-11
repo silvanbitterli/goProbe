@@ -320,9 +320,9 @@ func conditionMustEnd(tokens []string, prev, last string, suggs []suggestion, op
 	// If there is exactly one suggestion, and the previous or current
 	// condition is a direction filter and this suggestion is
 	// exactly what the user specified
-	if len(suggs) == 1 {
+	if len(suggs) == 1 && len(tokens) > 3 {
 		for _, direction := range types.DirectionFilters {
-			if suggs[0].token == string(direction) && suggs[0].token == last && len(tokens) > 3 {
+			if suggs[0].token == string(direction) && suggs[0].token == last {
 				return true
 			}
 		}

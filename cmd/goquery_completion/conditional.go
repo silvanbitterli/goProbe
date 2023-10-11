@@ -31,8 +31,7 @@ func openParens(tokens []string) int {
 	return open
 }
 
-// dirKeywordOccurrences counts the number of dir keyword occurrences
-// in tokens
+// dirKeywordOccurrences counts the number of dir keyword occurrences in tokens
 func dirKeywordOccurrences(tokens []string) int {
 	dirKeywordOccurrences := 0
 	for _, token := range tokens {
@@ -43,8 +42,8 @@ func dirKeywordOccurrences(tokens []string) int {
 	return dirKeywordOccurrences
 }
 
-// firstTopLevelBinaryOp returns the position of the first
-// top-level binary logical operator inside tokens and the respective token.
+// firstTopLevelBinaryOp returns the position of the first top-level binary logical
+// operator inside tokens and the respective token.
 // It returns -1 and an empty string if tokens do not contain any binary logical operator.
 func firstTopLevelBinaryOp(tokens []string) (int, string) {
 	for i, token := range tokens {
@@ -208,6 +207,7 @@ func conditional(args []string) []string {
 				}
 			}
 		}
+
 		if len(suggs) == 0 {
 			return unknownSuggestions{}
 		}
@@ -240,7 +240,7 @@ func verifySuggestion(tokens []string, sugg suggestion, prevprev string, prev st
 
 // checkDirKeywordConstraints checks whether sugg is a valid suggestion with respect to the
 // constraints on the structure of the condition introduced by the dir keyword.
-// checkDirKeywordConstraints returns true if sugg is a valid suggestion and false otherwise.
+// Returns true if sugg is a valid suggestion and false otherwise.
 func checkDirKeywordConstraints(sugg suggestion, prevprev, prev string,
 	nTokens, openParens, dirKeywordOccurrences, firstTopLevelBinaryOpPos int, firstTopLevelBinaryOp string) bool {
 
@@ -286,8 +286,7 @@ func checkDirKeywordConstraints(sugg suggestion, prevprev, prev string,
 	return true
 }
 
-// conditionMustEnd checks whether the condition string must end now
-// in order to be a valid condition.
+// conditionMustEnd checks whether the condition string must end now in order to be a valid condition.
 func conditionMustEnd(tokens []string, prev, last string, suggs []suggestion, openParens, dirKeywordOccurrences int) bool {
 
 	// If there are no suggestions, and the previous or current

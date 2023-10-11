@@ -36,6 +36,18 @@ func openParens(tokens []string) int {
 	return open
 }
 
+// dirKeywordOccurrences counts the number of dir keyword occurrences
+// in tokens
+func dirKeywordOccurrences(tokens []string) int {
+	dirKeywordOccurrences := 0
+	for _, token := range tokens {
+		if token == types.FilterKeywordDirection || token == types.FilterKeywordDirectionSugared {
+			dirKeywordOccurrences++
+		}
+	}
+	return dirKeywordOccurrences
+}
+
 func nextAll(prevprev, prev string, openParens int) []suggestion {
 	s := func(sugg string, accept bool) suggestion {
 		if accept {
@@ -208,6 +220,9 @@ func conditional(args []string) []string {
 
 		prevprev := antepenultimate(tokens)
 		prev := penultimate(tokens)
+		openParens := openParens(tokens)
+		last := last(tokens)
+		dirKeywordOccurrences := dirKeywordOccurrences(tokens[:len(tokens)-1])
 		for _, sugg := range nextAll(prevprev, prev, openParens(tokens)) {
 			if strings.HasPrefix(sugg.token, last(tokens)) {
 				if strings.Contains(sugg.token, types.FilterKeywordDirection) {

@@ -18,10 +18,6 @@ import (
 	"github.com/els0r/goProbe/pkg/types"
 )
 
-//var dirKeywordOccurred = false
-//var topLevelAnd = false
-//var dirKeywordDisallowed = false
-
 func openParens(tokens []string) int {
 	open := 0
 	for _, token := range tokens {
@@ -66,6 +62,7 @@ func nextAll(prevprev, prev string, openParens int) []suggestion {
 		}
 		return suggestion{sugg, sugg + " ...  ", accept}
 	}
+
 	switch prev {
 	case "", "(", "&", "|":
 		return []suggestion{
